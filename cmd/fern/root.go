@@ -18,9 +18,8 @@ var rootCmd = &cobra.Command{
 	Short: "Fern reporter",
 	Long:  `Fern reporter cli tool`,
 	Run: func(cmd *cobra.Command, args []string) {
-		// Do Stuff Here
+		fmt.Print("Please choose a test format; see fern --help for more\n\n")
 
-		// Logic for handling the passed flags
 		fmt.Printf("Project Name: %s\n", projectName)
 		fmt.Printf("Test Reports Directory: %s\n", reportsDirectory)
 		fmt.Printf("Fern API Url: %s\n", fernApiUrl)
@@ -29,9 +28,9 @@ var rootCmd = &cobra.Command{
 
 func init() {
 	// Define flags for the command
-	rootCmd.Flags().StringVarP(&projectName, "projectName", "n", "", "Name of the project (required)")
-	rootCmd.Flags().StringVarP(&reportsDirectory, "reportDirectory", "d", "", "Path to the test reports directory (required)")
-	rootCmd.Flags().StringVarP(&fernApiUrl, "fernApiUrl", "u", "", "Fern API url to send reports (required)")
+	rootCmd.PersistentFlags().StringVarP(&projectName, "projectName", "n", "", "Name of the project (required)")
+	rootCmd.PersistentFlags().StringVarP(&reportsDirectory, "reportDirectory", "d", "", "Path to the test reports directory (required)")
+	rootCmd.PersistentFlags().StringVarP(&fernApiUrl, "fernApiUrl", "u", "", "Fern API url to send reports (required)")
 
 	// Mark flags as required
 	rootCmd.MarkFlagRequired("projectName")
