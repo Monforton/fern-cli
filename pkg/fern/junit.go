@@ -1,13 +1,10 @@
 package fern
 
 import (
-	"bytes"
-	"encoding/json"
 	"encoding/xml"
 	"fmt"
 	"io"
 	"log"
-	"net/http"
 	"os"
 	"path/filepath"
 	"time"
@@ -15,7 +12,11 @@ import (
 	"github.com/monforton/fern-cli/pkg/models"
 )
 
-func ReportJunit(projectName string, reportDirectory string, fernUrl string) {
+var isVerboseOut bool
+
+func ReportJunit(projectName string, reportDirectory string, fernUrl string, isVerbose bool) {
+	isVerboseOut = isVerbose
+
 	var testRun models.TestRun
 	testRun.ID = 0
 	testRun.TestProjectName = projectName
@@ -45,6 +46,9 @@ func processDir(testRun *models.TestRun, currentPath string) error {
 	for _, entry := range entries {
 		if !entry.IsDir() {
 			reportPath := filepath.Join(currentPath, entry.Name())
+			if isVerboseOut {
+				log.Default().Printf("Now reading %s\n", reportPath)
+			}
 			suiteRun, err := processFile(reportPath)
 			if err != nil {
 				return fmt.Errorf("Failed to process file %s: %v", reportPath, err)
@@ -142,24 +146,6 @@ func parseTestSuite(testSuite models.TestSuite) (suiteRun models.SuiteRun, err e
 	}
 
 	return
-}
-
-func sendTestRun(testRun models.TestRun, serviceUrl string) error {
-	payload, err := json.Marshal(testRun)
-	if err != nil {
-		return fmt.Errorf("Failed to serialize test run: %v", err)
-	}
-
-	resp, err := http.Post(serviceUrl+"/api/testrun", "application/json", bytes.NewReader(payload))
-	if err != nil {
-		return fmt.Errorf("Failed to send request: %v", err)
-	}
-	defer resp.Body.Close()
-
-	if resp.StatusCode >= 300 {
-		return fmt.Errorf("Unexpected response code: %d", resp.StatusCode)
-	}
-	return nil
 }
 
 func getEndTime(startTime time.Time, duration string) (endTime time.Time, err error) {

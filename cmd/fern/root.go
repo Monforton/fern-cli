@@ -11,6 +11,7 @@ var (
 	projectName      string
 	reportsDirectory string
 	fernApiUrl       string
+	isVerbose        bool
 )
 
 var rootCmd = &cobra.Command{
@@ -31,17 +32,18 @@ func init() {
 	rootCmd.PersistentFlags().StringVarP(&projectName, "projectName", "n", "", "Name of the project (required)")
 	rootCmd.PersistentFlags().StringVarP(&reportsDirectory, "reportDirectory", "d", "", "Path to the test reports directory (required)")
 	rootCmd.PersistentFlags().StringVarP(&fernApiUrl, "fernApiUrl", "u", "", "Fern API url to send reports (required)")
+	rootCmd.PersistentFlags().BoolVarP(&isVerbose, "verbose", "v", false, "Enable verbose command output")
 
 	// Mark flags as required
-	rootCmd.MarkFlagRequired("projectName")
-	rootCmd.MarkFlagRequired("reportDirectory")
-	rootCmd.MarkFlagRequired("fernApiUrl")
+	rootCmd.MarkPersistentFlagRequired("projectName")
+	rootCmd.MarkPersistentFlagRequired("reportDirectory")
+	rootCmd.MarkPersistentFlagRequired("fernApiUrl")
 
 }
 
 func Execute() {
 	if err := rootCmd.Execute(); err != nil {
-		fmt.Fprintf(os.Stderr, "Whoops. There was an error while executing the CLI '%s'", err)
+		fmt.Fprintf(os.Stderr, "Whoops. There was an error running the cli: '%s'", err)
 		os.Exit(1)
 	}
 }
