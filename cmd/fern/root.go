@@ -16,7 +16,7 @@ var (
 
 var rootCmd = &cobra.Command{
 	Use:   "fern",
-	Short: "Fern reporter",
+	Short: "Fern CLI",
 	Long:  `Fern reporter cli tool`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Print("Please choose a test format; see fern --help for more\n\n")
@@ -32,7 +32,7 @@ func init() {
 	rootCmd.PersistentFlags().StringVarP(&projectName, "projectName", "n", "", "Name of the project (required)")
 	rootCmd.PersistentFlags().StringVarP(&reportsDirectory, "reportDirectory", "d", "", "Path to the test reports directory (required)")
 	rootCmd.PersistentFlags().StringVarP(&fernApiUrl, "fernApiUrl", "u", "", "Fern API url to send reports (required)")
-	rootCmd.PersistentFlags().BoolVarP(&isVerbose, "verbose", "v", false, "Enable verbose command output")
+	rootCmd.PersistentFlags().BoolVarP(&isVerbose, "verbose", "", false, "Enable verbose command output")
 
 	// Mark flags as required
 	rootCmd.MarkPersistentFlagRequired("projectName")

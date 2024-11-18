@@ -21,7 +21,7 @@ func ReportJunit(projectName string, reportDirectory string, fernUrl string, isV
 	testRun.ID = 0
 	testRun.TestProjectName = projectName
 
-	log.Default().Print("\nParsing reports...")
+	log.Default().Print("Parsing reports...")
 	if err := processDir(&testRun, reportDirectory); err != nil {
 		log.Default().Println("FAILED")
 		panic(err)

@@ -4,7 +4,7 @@
 If you don't know what fern is, [check it out here!](https://github.com/Guidewire/fern-reporter) This repository is a command line tool to enable users to send their test results from other formats than Ginkgo to the Fern reporter. Currently only JUnit is supported but it could be easily extended to support other formats as well.
 
 ## Usage
-Build the tool with the following command:
+Build the tool with the following command to create the `fern-cli` executable:
 ```bash
 go build
 ```

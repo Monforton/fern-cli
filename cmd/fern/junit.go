@@ -11,7 +11,7 @@ var junitCmd = &cobra.Command{
 	Short:   "Sends the reporter data from JUnit files",
 	Args:    cobra.ExactArgs(0),
 	Run: func(cmd *cobra.Command, args []string) {
-		fern.ReportJunit(projectName, reportsDirectory, fernApiUrl)
+		fern.ReportJunit(projectName, reportsDirectory, fernApiUrl, isVerbose)
 	},
 }
 
