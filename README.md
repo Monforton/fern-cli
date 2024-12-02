@@ -1,3 +1,5 @@
+‼️ Moved to [fern-junit-client](https://github.com/guidewire-oss/fern-junit-client) ‼️
+
 # Fern CLI
 ## Introduction
 
